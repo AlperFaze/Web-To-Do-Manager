@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    {% if current_user.is_authenticated %}
+
+    <div class="col-md-9">
+        <h1>Записи в блоге</h1>
+
+        <a href="/tasks" class="btn btn-secondary" style="margin-bottom: 15px; background-color: #5097de;">Добавить задачу</a>
+        <a href="/tasks_clear_completed" class="btn btn-secondary" style="margin-bottom: 15px; background-color: #5097de;">Очистить выполненные</a>
+
+        <div class="scroll-tasks">
+            {% for item in tasks %}
+            <div class="col-md-12 border custom-round p-3 mb-3 {% if item.deadline < now %}expired-bg {% elif item.is_completed == 1 %} complete-bg {% else %}in_process-bg{% endif %}">
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+                        <h2>{{item.title}}</h2>
+
+                        <div class="mb-2" style=" word-break: break-all;">
+                            {% if item.content | length > 150 %}
+                                {{ item.content[:150] }}...
+                            {% else %}
+                                {{ item.content }}
+                            {% endif %}
+                        </div>
+
+                        <div class>
+                            {% for category in item.categories%}
+                            <span class="badge" style="background-color: #5097de; color: #ffffff; font-size: 14px;">{{ category.name }}</span>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-4 text-end text-muted small" style="font-size: 16px; white-space: nowrap;">
+                        <div>Дата создания - {{ item.get_date("created_date") }}</div>
+                        <div>Дедлайн - {{ item.get_date("deadline") }}</div>
+                    </div>
+                </div>
+
+                <div class="mt-2">
+
+                    <a href="/tasks/{{ item.id }}" class="btn btn-warning">Изменить</a>
+                    <a href="/tasks_delete/{{ item.id }}" class="btn btn-danger">Удалить</a>
+
+                    {% if item.is_completed == 0%}
+                    <a href="/tasks_complete/{{ item.id }}" class="btn btn-success">Выполнить</a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <h3 class="mb-3">Доступные теги</h3>
+
+        <div class="list-group" style="margin-bottom: 20px;">
+            <ul class="scrollable-list">
+                {% for category in categories %}
+                <li>{{ category.name }}</li>
+                {% else %}
+                <p class="text-muted">Тегов пока нет</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="position-sticky">
+            {% if current_user.is_authenticated %}
+            <form action="/add_category" method="POST" class="mb-3">
+                <div class="input-group">
+                    <input type="text" name="category_name" class="form-control" placeholder="Новый тег" required>
+                    <button class="btn btn-outline-primary" type="submit">+</button>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+
+    {% else %}
+    <div class="col-md-12">
+        <h1>Зарегистрируйтесь или войдите в аккаунт</h1>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

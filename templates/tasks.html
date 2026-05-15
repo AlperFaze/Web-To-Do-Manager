@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Добавление новости</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(class="form-control") }}<br>
+        {% for error in form.title.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.content.label }}<br>
+        {{ form.content(class="form-control") }}<br>
+        {% for error in form.content.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+
+    <h3 class="mb-3">Выберите теги</h3>
+            <div class="scrollable-list">
+                {% for item in categories %}
+                    <label style="display: block;">
+                        <input type="checkbox" name="options" value="{{ item.id }}">
+                        {{ item.name }}
+                    </label>
+                {% endfor %}
+            </div>
+
+    <p>
+        {{ form.deadline.label }}<br>
+        {{ form.deadline(class="form-control", type="datetime-local") }}<br>
+    </p>
+
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+{% endblock %}

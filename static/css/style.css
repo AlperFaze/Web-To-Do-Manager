@@ -1,0 +1,61 @@
+body {
+    background: linear-gradient(135deg, #f0f4f8 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+
+.scroll-container {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 15px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.checkbox-item input {
+    margin-right: 10px;
+}
+
+.scrollable-list {
+    height: 130px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0;
+    list-style-type: none;
+    background-color: #c3d8ee;
+}
+
+.scroll-tasks {
+    height: 1100px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0;
+    list-style-type: none;
+}
+
+.custom-round {
+    border-radius: 30px;
+}
+
+.in_process-bg {
+    background-color: #c3d8ee;
+}
+
+.expired-bg {
+    background-color: #ef948d;
+}
+
+.complete-bg {
+    background-color: #bdd6c3;
+}
